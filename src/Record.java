@@ -1,4 +1,5 @@
 public class Record {
+    // declaring attributes
     private String recordId;
     private String customerId;
     private String loanType;
@@ -6,7 +7,7 @@ public class Record {
     private int amountToPay;
     private int loanTerm;
 
-    // Default record
+    // Default record values
     public Record() {
         this.recordId = "000000";
         this.customerId = "AAA000";

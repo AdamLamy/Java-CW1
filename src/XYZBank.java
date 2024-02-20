@@ -13,7 +13,7 @@ public class XYZBank {
 
         // Creates 'maxRecords' number of records of which the user enters the data for
         for(int i = 0; i < maxRecords; i++){
-            System.out.print("\nEnter default record?  (Y/N)  ");
+            System.out.print("Enter default record?  (Y/N)  ");
             String defaultChoice = inputScanner.next();
 
             // User can opt to use the default record values or custom inputted values
@@ -23,25 +23,48 @@ public class XYZBank {
                 if (nextRecord(i, maxRecords, inputScanner)) break;
 
             } else if (defaultChoice.equalsIgnoreCase("N")) {
-                System.out.print("\nEnter Record ID: ");
-                String recordId = inputScanner.next();
+                // declaring variables
+                String recordId;
+                String customerId;
+                String loanType;
+                String interest;
+                String amountToPay;
+                String loanTerm;
 
-                System.out.print("Enter Customer ID: ");
-                String customerId = inputScanner.next();
+                // takes and validates custom user inputs for next record
+                do {
+                    System.out.print("\nEnter Record ID (Format: XXXXXX): ");
+                    recordId = inputScanner.next();
+                } while (!isValidRecordId(recordId));
 
-                System.out.print("Enter Loan Type: ");
-                String loanType = inputScanner.next();
+                do {
+                    System.out.print("Enter valid Customer ID (Format: AAAXXX): ");
+                    customerId = inputScanner.next();
+                } while (!isValidCustomerId(customerId));
 
-                System.out.print("Enter Interest: ");
-                int interest = inputScanner.nextInt();
+                do {
+                    System.out.print("Enter Loan Type (”Auto”, ”Builder”,”Mortgage”, ”Personal”, or ”Other”): ");
+                    loanType = inputScanner.next();
+                } while (!isValidLoanType(loanType));
 
-                System.out.print("Enter amount left to pay: ");
-                int amountToPay = inputScanner.nextInt();
+                do {
+                    System.out.print("Enter Interest Rate (Integer): ");
+                    interest = inputScanner.next();
+                } while (notInteger((interest)));
 
-                System.out.print("Enter Loan Term: ");
-                int loanTerm = inputScanner.nextInt();
+                do {
+                    System.out.print("Enter amount left to pay in thousand's of pounds: ");
+                    amountToPay = inputScanner.next();
+                } while (notInteger((amountToPay)));
 
-                Record newRecord = new Record(recordId, customerId, loanType, interest, amountToPay, loanTerm);
+                do {
+                    System.out.print("Enter Loan Term (Number of Years): ");
+                    loanTerm = inputScanner.next();
+                } while (notInteger((loanTerm)));
+
+                // creates new Record object using user's custom inputs, then adds new object to the list of records
+                Record newRecord = new Record(recordId, customerId.toUpperCase(), loanType.toUpperCase(),
+                        Integer.parseInt(interest), Integer.parseInt(amountToPay), Integer.parseInt(loanTerm));
                 records.add(newRecord);
 
                 if (nextRecord(i, maxRecords, inputScanner)) break;
@@ -60,7 +83,7 @@ public class XYZBank {
         System.out.printf("%-15s %-15s %-15s %-10s %-15s %-10s%n",
                 "Record ID", "Customer ID", "Loan Type", "Interest", "Amount Left", "Loan Term");
 
-        // output record data
+        // output record data in tabular format
         for (Record record : records) {
             System.out.printf("%-15s %-15s %-15s %-10s %-15s %-10s%n",
                     record.getRecordId(),
@@ -75,6 +98,7 @@ public class XYZBank {
     // method for asking user to input another record or not
     private static boolean nextRecord(int i, int maxRecords, Scanner inputScanner) {
         if(i < maxRecords - 1){
+            System.out.print("\nEnter new record?  (Y/N)  ");
             String choice = getChoice(inputScanner);
             if (Objects.equals(choice.toUpperCase(), "N")) {
                 return true;
@@ -86,10 +110,40 @@ public class XYZBank {
         return false;
     }
 
-    // used to decide whether to ask the user for inputs for a new record
+    // Gets a Yes/No answer for a choice variable
     private static String getChoice(Scanner inputScanner) {
         System.out.print("\nEnter new record?  (Y/N)  ");
         return inputScanner.next();
+    }
+
+
+    // Methods for validating user inputs of a custom record
+    private static boolean isValidRecordId(String input) {
+        return input.matches("[0-9]{6}");
+    }
+
+    private static boolean isValidCustomerId(String input) {
+        return input.matches("[a-zA-Z]{3}[0-9]{3}");
+    }
+
+    private static boolean isValidLoanType(String input) {
+        // builds list of valid loan types and checks if input is in the list
+        List<String> loanTypes = new ArrayList<>();
+        loanTypes.add("auto");
+        loanTypes.add("builder");
+        loanTypes.add("mortgage");
+        loanTypes.add("personal");
+        loanTypes.add("other");
+        return loanTypes.contains(input.toLowerCase());
+    }
+
+    public static boolean notInteger(String input) {
+        try {
+            Integer.parseInt(input);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
     }
 
 }
