@@ -26,18 +26,6 @@ public class Record {
         this.loanTerm = loanTerm;
     }
 
-    // Converts object's information to a string for output
-    public String toString() {
-        return "LoanRecord{" +
-                "recordId='" + recordId + '\'' +
-                ", customerId='" + customerId + '\'' +
-                ", loanType='" + loanType + '\'' +
-                ", interest=" + interest +
-                ", amountToPay=" + amountToPay +
-                ", loanTerm=" + loanTerm +
-                '}';
-    }
-
 
     // Getters and setters for each attribute
     public String getRecordId() {
