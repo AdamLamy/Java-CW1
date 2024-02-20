@@ -13,12 +13,14 @@ public class XYZBank {
 
         // Creates 'maxRecords' number of records of which the user enters the data for
         for(int i = 0; i < maxRecords; i++){
-            System.out.print("Enter default record?  (Y/N)  ");
+            System.out.print("\nEnter default record?  (Y/N)  ");
             String defaultChoice = inputScanner.next();
 
+            // User can opt to use the default record values or custom inputted values
             if (defaultChoice.equalsIgnoreCase("Y")){
                 Record newRecord = new Record();
                 records.add(newRecord);
+                if (nextRecord(i, maxRecords, inputScanner)) break;
 
             } else if (defaultChoice.equalsIgnoreCase("N")) {
                 System.out.print("\nEnter Record ID: ");
@@ -42,22 +44,12 @@ public class XYZBank {
                 Record newRecord = new Record(recordId, customerId, loanType, interest, amountToPay, loanTerm);
                 records.add(newRecord);
 
-                if(i < maxRecords - 1){
-                    String choice = getChoice(inputScanner);
-                    if (Objects.equals(choice.toUpperCase(), "N")) {
-                        break;
-                    } else if (!choice.equalsIgnoreCase("Y")){
-                        System.out.println("Invalid answer.");
-                        getChoice(inputScanner);
-                    }
-                }
+                if (nextRecord(i, maxRecords, inputScanner)) break;
+
+                // if invalid input is entered for defaultChoice, the iteration of the for loop is repeated until input is valid
             } else {
-                i = i-1;
+                i = i - 1;
             }
-
-
-
-
         }
 
         System.out.println("\n++++++++++++++++++++++++++\n    Outputting Records\n++++++++++++++++++++++++++\n");
@@ -80,9 +72,23 @@ public class XYZBank {
         }
     }
 
+    // method for asking user to input another record or not
+    private static boolean nextRecord(int i, int maxRecords, Scanner inputScanner) {
+        if(i < maxRecords - 1){
+            String choice = getChoice(inputScanner);
+            if (Objects.equals(choice.toUpperCase(), "N")) {
+                return true;
+            } else if (!choice.equalsIgnoreCase("Y")){
+                System.out.println("Invalid answer.");
+                getChoice(inputScanner);
+            }
+        }
+        return false;
+    }
+
     // used to decide whether to ask the user for inputs for a new record
     private static String getChoice(Scanner inputScanner) {
-        System.out.print("Enter new record?  (Y/N)  ");
+        System.out.print("\nEnter new record?  (Y/N)  ");
         return inputScanner.next();
     }
 
