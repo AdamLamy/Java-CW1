@@ -13,37 +13,50 @@ public class XYZBank {
 
         // Creates 'maxRecords' number of records of which the user enters the data for
         for(int i = 0; i < maxRecords; i++){
-            System.out.print("\nEnter Record ID: ");
-            String recordId = inputScanner.next();
+            System.out.print("Enter default record?  (Y/N)  ");
+            String defaultChoice = inputScanner.next();
 
-            System.out.print("Enter Customer ID: ");
-            String customerId = inputScanner.next();
+            if (defaultChoice.equalsIgnoreCase("Y")){
+                Record newRecord = new Record();
+                records.add(newRecord);
 
-            System.out.print("Enter Loan Type: ");
-            String loanType = inputScanner.next();
+            } else if (defaultChoice.equalsIgnoreCase("N")) {
+                System.out.print("\nEnter Record ID: ");
+                String recordId = inputScanner.next();
 
-            System.out.print("Enter Interest: ");
-            int interest = inputScanner.nextInt();
+                System.out.print("Enter Customer ID: ");
+                String customerId = inputScanner.next();
 
-            System.out.print("Enter amount left to pay: ");
-            int amountToPay = inputScanner.nextInt();
+                System.out.print("Enter Loan Type: ");
+                String loanType = inputScanner.next();
 
-            System.out.print("Enter Loan Term: ");
-            int loanTerm = inputScanner.nextInt();
+                System.out.print("Enter Interest: ");
+                int interest = inputScanner.nextInt();
 
-            Record newRecord = new Record(recordId, customerId, loanType, interest, amountToPay, loanTerm);
-            records.add(newRecord);
+                System.out.print("Enter amount left to pay: ");
+                int amountToPay = inputScanner.nextInt();
 
+                System.out.print("Enter Loan Term: ");
+                int loanTerm = inputScanner.nextInt();
 
-            if(i < maxRecords - 1){
-                String choice = getChoice(inputScanner);
-                if (Objects.equals(choice.toUpperCase(), "N")) {
-                    break;
-                } else if (!choice.equalsIgnoreCase("Y")){
-                    System.out.println("Invalid answer.");
-                    getChoice(inputScanner);
+                Record newRecord = new Record(recordId, customerId, loanType, interest, amountToPay, loanTerm);
+                records.add(newRecord);
+
+                if(i < maxRecords - 1){
+                    String choice = getChoice(inputScanner);
+                    if (Objects.equals(choice.toUpperCase(), "N")) {
+                        break;
+                    } else if (!choice.equalsIgnoreCase("Y")){
+                        System.out.println("Invalid answer.");
+                        getChoice(inputScanner);
+                    }
                 }
+            } else {
+                i = i-1;
             }
+
+
+
 
         }
 
