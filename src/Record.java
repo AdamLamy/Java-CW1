@@ -18,7 +18,7 @@ public class Record {
     }
 
     // Custom record
-    public Record(String recordId, String customerId, String loanType, int interest, int amountToPay, int loanTerm) {
+    public Record(String recordId, String customerId, String loanType, float interest, int amountToPay, int loanTerm) {
         this.recordId = recordId;
         this.customerId = customerId;
         this.loanType = loanType;

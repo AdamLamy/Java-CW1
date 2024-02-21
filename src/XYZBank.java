@@ -48,9 +48,9 @@ public class XYZBank {
                 } while (!isValidLoanType(loanType));
 
                 do {
-                    System.out.print("Enter Interest Rate (Integer): ");
+                    System.out.print("Enter Interest Rate: ");
                     interest = inputScanner.next();
-                } while (notInteger((interest)));
+                } while (notFloat((interest)));
 
                 do {
                     System.out.print("Enter amount left to pay in thousand's of pounds: ");
@@ -64,7 +64,7 @@ public class XYZBank {
 
                 // creates new Record object using user's custom inputs, then adds new object to the list of records
                 Record newRecord = new Record(recordId, customerId.toUpperCase(), loanType.toUpperCase(),
-                        Integer.parseInt(interest), Integer.parseInt(amountToPay), Integer.parseInt(loanTerm));
+                        Float.parseFloat(interest), Integer.parseInt(amountToPay), Integer.parseInt(loanTerm));
                 records.add(newRecord);
 
                 if (nextRecord(i, maxRecords, inputScanner)) break;
@@ -98,7 +98,6 @@ public class XYZBank {
     // method for asking user to input another record or not
     private static boolean nextRecord(int i, int maxRecords, Scanner inputScanner) {
         if(i < maxRecords - 1){
-            System.out.print("\nEnter new record?  (Y/N)  ");
             String choice = getChoice(inputScanner);
             if (Objects.equals(choice.toUpperCase(), "N")) {
                 return true;
@@ -161,5 +160,15 @@ public class XYZBank {
             return true;
         }
     }
+    public static boolean notFloat(String input) {
+        try {
+            Float.parseFloat(input);
+            return false;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input, please ensure you enter a number.");
+            return true;
+        }
+    }
+
 
 }
