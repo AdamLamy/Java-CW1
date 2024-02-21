@@ -119,11 +119,21 @@ public class XYZBank {
 
     // Methods for validating user inputs of a custom record
     private static boolean isValidRecordId(String input) {
-        return input.matches("[0-9]{6}");
+        if (input.matches("[0-9]{6}")) {
+            return true;
+        } else {
+            System.out.println("Invalid RecordID, please enter 6-digit number!");
+            return false;
+        }
     }
 
     private static boolean isValidCustomerId(String input) {
-        return input.matches("[a-zA-Z]{3}[0-9]{3}");
+        if (input.matches("[a-zA-Z]{3}[0-9]{3}")) {
+            return true;
+        } else {
+            System.out.println("Invalid Customer ID, please enter in the pattern AAAXXX");
+            return false;
+        }
     }
 
     private static boolean isValidLoanType(String input) {
@@ -134,7 +144,12 @@ public class XYZBank {
         loanTypes.add("mortgage");
         loanTypes.add("personal");
         loanTypes.add("other");
-        return loanTypes.contains(input.toLowerCase());
+        if(loanTypes.contains(input.toLowerCase())){
+            return true;
+        } else {
+            System.out.println("Invalid Loan Type.");
+            return false;
+        }
     }
 
     public static boolean notInteger(String input) {
@@ -142,6 +157,7 @@ public class XYZBank {
             Integer.parseInt(input);
             return false;
         } catch (NumberFormatException e) {
+            System.out.println("Invalid input, please ensure you enter an integer.");
             return true;
         }
     }
