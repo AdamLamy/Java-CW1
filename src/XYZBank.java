@@ -7,9 +7,14 @@ public class XYZBank {
     public static void main(String[] args) {
         Scanner inputScanner = new Scanner(System.in);
         List<Record> records = new ArrayList<>();
+        String maxRecordString;
 
-        System.out.print("\nEnter maximum records: ");
-        int maxRecords = inputScanner.nextInt();
+        do {
+            System.out.print("\nEnter maximum records: ");
+            maxRecordString = inputScanner.next();
+        } while (notInteger(maxRecordString));
+
+        int maxRecords = Integer.parseInt(maxRecordString);
 
         // Creates 'maxRecords' number of records of which the user enters the data for
         for(int i = 0; i < maxRecords; i++){
