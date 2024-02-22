@@ -1,5 +1,5 @@
 public class Record {
-    // declaring attributes
+    // Declaring attributes
     private String recordId;
     private String customerId;
     private String loanType;
@@ -19,12 +19,12 @@ public class Record {
 
     // Custom record
     public Record(String recordId, String customerId, String loanType, float interest, int amountToPay, int loanTerm) {
-        this.recordId = recordId;
-        this.customerId = customerId;
-        this.loanType = loanType;
-        this.interest = interest;
-        this.amountToPay = amountToPay;
-        this.loanTerm = loanTerm;
+        setRecordId(recordId);
+        setCustomerId(customerId);
+        setLoanType(loanType);
+        setInterest(interest);
+        setAmountToPay(amountToPay);
+        setLoanTerm(loanTerm);
     }
 
 
